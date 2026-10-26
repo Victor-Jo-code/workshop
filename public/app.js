@@ -1,32 +1,56 @@
 const $=s=>document.querySelector(s);
 const places=[
- {id:'lunch1',name:'솔향기',query:'철원 솔향기',note:'일정표의 식당명 기준 검색입니다. 같은 이름의 장소가 있을 수 있으니 예약 장소를 확인하세요.'},
+ {id:'lunch1',name:'솔향기',query:'강원 철원군 동송읍 금학로 31-10 솔향기',note:'철원군 동송읍 금학로 31-10 · 손만두버섯전골 · 033-455-8859 / 0507-1355-9259'},
+ {id:'eunha',name:'은하수교 공영주차장',query:'철원 은하수교 공영주차장',note:'은하수교 출렁다리 산책 집결 장소'},
+ {id:'bridge',name:'은하수교 출렁다리',query:'철원 은하수교',note:'산책 일정 13:10~14:10 · 표 기재 예상 산책 시간 약 50분'},
+ {id:'soipark',name:'철원역사문화공원 주차장',query:'강원특별자치도 철원군 철원읍 금강산로 262',note:'내비게이션: 철원역사문화공원 · 소이산 모노레일 탑승 줄 대기, 조별 8명'},
  {id:'soi',name:'소이산 모노레일',query:'철원 소이산 모노레일',note:'철원역사문화공원 일대 · 탑승 장소는 예약 안내를 확인하세요.'},
- {id:'goseok',name:'고석정',query:'철원 고석정',note:'고석정 탐방 · 물윗길과 꽃밭은 각각 별도 장소입니다.'},
- {id:'water',name:'한탄강 물윗길',query:'철원 한탄강 물윗길 태봉대교 매표소',note:'지도는 태봉대교 매표소 기준입니다. 실제 단체 집결 지점은 확인이 필요합니다.'},
- {id:'flower',name:'고석정 꽃밭',query:'철원 고석정 꽃밭 태봉로 1769',note:'강원특별자치도 철원군 동송읍 태봉로 1769'},
- {id:'hotel',name:'숙소',query:'',note:'포천 숙소의 정확한 주소를 장소 설정에서 입력해 주세요.'},
+ {id:'void',name:'카페 보이드(CAFE VOID)',query:'강원 철원군 동송읍 태봉로 1772 카페 보이드(CAFE VOID)',note:'철원군 동송읍 태봉로 1772 · 0507-1366-6130 · 도보 1~2분(제공 일정표 기준)'},
+ {id:'hotel',name:'한화리조트 산정호수 안시',query:'포천 한화리조트 산정호수 안시',note:'워크숍 숙소 · 한화리조트 산정호수 안시'},
+ {id:'karaoke',name:'산울림노래방',query:'포천 한화리조트 산정호수 안시',note:'위치 안내 기준: 한화리조트 산정호수 안시 · 노래방은 리조트 건너편'},
  {id:'dinner',name:'황금오리 숯불닭갈비',query:'포천 황금오리 숯불닭갈비',note:'일정표의 식당명 기준 검색입니다. 예약한 지점을 확인하세요.'},
- {id:'breakfast',name:'옛날전통된장',query:'포천 옛날전통된장',note:'일정표의 식당명 기준 검색입니다. 예약 장소를 확인하세요.'},
- {id:'lake',name:'산정호수 둘레길',query:'포천 산정호수',note:'경기도 포천시 영북면 산정호수로 402 일대 · 플로깅 집결 지점은 현장 안내를 확인하세요.'},
- {id:'lunch2',name:'산비탈손두부',query:'포천 산비탈손두부',note:'일정표의 식당명 기준 검색입니다. 예약 장소를 확인하세요.'},
- {id:'cafe',name:'분임토의 카페',query:'',note:'카페 이름 또는 주소를 장소 설정에서 입력해 주세요.'}
+ {id:'breakfast',name:'옛날전통된장집',query:'포천 옛날전통된장집',note:'한식당 · 리조트에서 도보 3분(제공 일정표 기준) · 031-534-5034'},
+ {id:'lake',name:'산정호수 수변데크길',query:'포천 산정호수 수변데크길',note:'플로깅 코스: 수변데크길 → 조각공원 · 약 3.2km'},
+ {id:'sculpture',name:'산정호수 조각공원',query:'포천 산정호수 조각공원',note:'단체 인증샷 및 정리 · 잔디광장 / 글자 조형물'},
+ {id:'lunch2',name:'산비탈손두부',query:'경기 포천시 영북면 산정호수로 546 산비탈손두부',note:'포천시 영북면 산정호수로 546 · 0507-1446-3992'},
+ {id:'cafe',name:'가비가배',query:'포천 가비가배',note:'031-535-3101 · 산비탈손두부에서 차량 6분 / 2.8km(제공 일정표 기준)'}
 ];
 const schedule=[[
- ['11:00','12:00','오리엔테이션 · 오찬','함께 모여 워크숍을 시작합니다. 인원 체크 및 서명','식사','lunch1'],
- ['12:00','14:00','소이산 모노레일','철원의 가을 풍경을 만나는 시간','탐방','soi'],
- ['14:30','17:30','분임 토의 · 고석정 탐방','물윗길 트레킹, 고석정 꽃밭 · 세부 순서와 집결 장소는 현장 안내 확인','소통·탐방','goseok','water','flower'],
- ['17:30','18:00','숙소 이동 · 석식','철원 → 포천 이동 및 황금오리 숯불닭갈비 석식 · 일정표상 동일 시간대','이동·식사','hotel','dinner'],
- ['19:30','이후','자유시간 · 레크리에이션','동료들과 편안하게 이야기를 나누는 저녁','자유시간','hotel']
+ ['11:30','','식당 집결','솔향기(철원 동송읍) · 금학로 31-10 · 033-455-8859 / 0507-1355-9259','집결','lunch1'],
+ ['11:50','12:50','1일차 점심 식사','솔향기 · 손만두버섯전골','식사','lunch1'],
+ ['12:50','13:10','은하수교 공영주차장 이동','약 6.5km · 차량 8~10분 예상','이동','eunha'],
+ ['13:10','14:10','은하수교 출렁다리 산책','예상 산책 시간 약 50분','산책','bridge'],
+ ['14:10','14:25','철원역사문화공원 주차장 이동','내비게이션: 철원역사문화공원 · 금강산로 262 · 약 8.5~9km / 차량 10~12분(무료) · 소이산 모노레일 탑승 줄 대기(조별 8명)','이동','soipark'],
+ ['14:25','16:30','소이산 모노레일 & 전망대','철원 소이산 모노레일 탑승 및 전망대 관람 · 약 2시간','탐방','soi'],
+ ['16:30','16:35','카페 보이드(CAFE VOID) 이동','내비게이션: 카페 보이드(CAFE VOID) · 동송읍 태봉로 1772 · 표 기재 약 8.5~9km / 차량 10~12분 예상. 배정 시간은 5분으로, 이동 시간 확인 필요','이동','void'],
+ ['16:35','17:30','카페 보이드(CAFE VOID)','강원 철원군 동송읍 태봉로 1772 · 0507-1366-6130 · 도보 1~2분(제공 일정표 기준)','휴식','void'],
+ ['17:30','18:00','포천 숙소 이동','철원 → 포천 한화리조트 산정호수 안시 · 30분','이동','hotel'],
+ ['18:00','18:30','체크인 & 짐 정리 후 식당 이동','한화리조트 산정호수 안시 체크인 및 짐 정리','체크인','hotel','dinner'],
+ ['18:30','19:30','단체 만찬 · 저녁 식사','황금오리숯불닭갈비 · 0507-1458-4571','식사','dinner'],
+ ['19:30','20:30','산울림노래방(리조트 건너 노래방)','리조트 건너 산울림노래방에서 함께하는 저녁 여가 시간','여가','karaoke'],
+ ['20:30','이후','자율 휴식 & 친목 도모','한화리조트 산정호수 안시 객실(6.7호실)','자유시간','hotel']
 ],[
- ['07:00','09:00','조식','따뜻한 아침 식사로 둘째 날을 시작합니다.','식사','breakfast'],
- ['09:00','11:00','플로깅 · 산정호수 둘레길','호수를 따라 걷고, 함께 주변을 정리하는 시간','야외활동','lake'],
- ['12:00','13:00','오찬','산비탈손두부에서 함께하는 점심','식사','lunch2'],
- ['13:00','14:00','분임토의 · 해산','카페에서 워크숍을 마무리합니다. 인원 체크 및 서명','소통','cafe']
+ ['08:00','09:00','아침 식사 & 해장','옛날전통된장집 / 한식당 · 도보 3분 · 031-534-5034','식사','breakfast'],
+ ['09:00','09:30','체크아웃 & 로비 집결','한화리조트 산정호수 안시 로비 / 주차장 · 주차는 11시까지, 체크아웃 시 양해 부탁드릴 것 · 영북면 사무소 플로깅 장비(집게, 봉투, 장갑) 협조','집결','hotel'],
+ ['10:00','11:00','산정호수 플로깅 활동','산정호수 수변데크길 → 조각공원 · 약 3.2km · 집중 구역: 상가 및 조각공원 구역 → 수변데크길 → 소나무 숲길','야외활동','lake','sculpture'],
+ ['11:00','11:30','단체 인증샷 & 정리','산정호수 조각공원 잔디광장 / 글자 조형물','단체사진','sculpture'],
+ ['11:35','12:00','차량 탑승 및 오찬 이동','산정호수에서 산비탈손두부 차량 이동 · 약 3~5분 거리 · 포천시 영북면 산정호수로 546','이동','lunch2'],
+ ['12:00','13:00','오찬 · 점심 식사','산비탈손두부 · 0507-1446-3992','식사','lunch2'],
+ ['13:00','14:00','가비가배','가비가배로 이동 · 산비탈손두부에서 차량 6분 / 2.8km · 031-535-3101','휴식','cafe'],
+ ['14:00','이후','서울 방향 복귀','워크숍을 마무리하고 서울 방향으로 복귀합니다.','복귀']
 ]];
 let day=0,region=0,selected='soi',weatherResults={};
 function readSaved(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}}
 let overrides=readSaved('autumn-places',{});if(!overrides||typeof overrides!=='object')overrides={};
+// Use the confirmed lodging when an older browser saved the unassigned default.
+if(overrides.hotel==='')delete overrides.hotel;
+if(overrides.lunch1==='철원 솔향기')delete overrides.lunch1;
+if(overrides.void==='강원 철원군 동송읍 태봉로 1772 보이드')delete overrides.void;
+if(overrides.karaoke==='포천 산정호수 산울림노래방')delete overrides.karaoke;
+if(overrides.cafe==='')delete overrides.cafe;
+if(overrides.breakfast==='포천 옛날전통된장')delete overrides.breakfast;
+if(overrides.lake==='포천 산정호수')delete overrides.lake;
+if(overrides.lunch2==='포천 산비탈손두부')delete overrides.lunch2;
 const getPlace=id=>{const p=places.find(p=>p.id===id);return {...p,query:typeof overrides[id]==='string'?overrides[id]:p.query}};
 function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n}
 function toast(text){$('#toast').textContent=text;$('#toast').style.display='block';setTimeout(()=>$('#toast').style.display='none',2800)}
@@ -34,7 +58,7 @@ function renderSchedule(){
  $('#day-title').textContent=day===0?'철원에서 만나는 가을':'포천의 아침, 함께하는 마무리';$('#count').textContent=`${schedule[day].length}개의 일정`;
  document.querySelectorAll('.day-tabs button').forEach((b,i)=>{b.classList.toggle('active',i===day);b.setAttribute('aria-selected',String(i===day))});
  $('#timeline').replaceChildren();
- schedule[day].forEach(([start,end,title,desc,type,...ids])=>{const row=el('article',undefined,'event');const time=el('div',start,'time');time.append(el('small',end==='이후'?end:`— ${end}`));row.append(time);const card=el('div',undefined,'event-card');const head=el('div',undefined,'event-head');head.append(el('strong',title),el('span',type,'tag '+(type.includes('식사')?'food':type.includes('소통')?'meeting':'')));card.append(head,el('p',desc));ids.forEach((id,i)=>{const p=getPlace(id),b=el('button',`⌖ ${p.name}${p.query?'':' · 장소 확인 필요'}`,'place-button');b.type='button';b.append(el('span','↗'));b.addEventListener('click',()=>focusPlace(id,true));card.append(b);if(i<ids.length-1)card.append(el('span','　'));});row.append(card);$('#timeline').append(row)});
+ schedule[day].forEach(([start,end,title,desc,type,...ids])=>{const row=el('article',undefined,'event');const time=el('div',start,'time');if(end)time.append(el('small',end==='이후'?end:`— ${end}`));row.append(time);const card=el('div',undefined,'event-card');const head=el('div',undefined,'event-head');head.append(el('strong',title),el('span',type,'tag '+(type.includes('식사')?'food':type.includes('소통')?'meeting':'')));card.append(head,el('p',desc));ids.forEach((id,i)=>{const p=getPlace(id),b=el('button',`⌖ ${p.name}${p.query?'':' · 장소 확인 필요'}`,'place-button');b.type='button';b.append(el('span','↗'));b.addEventListener('click',()=>focusPlace(id,true));card.append(b);if(i<ids.length-1)card.append(el('span','　'));});row.append(card);$('#timeline').append(row)});
 }
 function focusPlace(id,scroll=false){selected=id;const p=getPlace(id);$('#map-title').textContent=p.name;$('#map-note').textContent=(overrides[id]&&p.query)?`설정한 장소: ${p.query}`:p.note;const query=p.query||'포천시';$('#map-frame').src=`https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=13&output=embed&hl=ko`;$('#google-open').href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;const url=`https://map.naver.com/p/search/${encodeURIComponent(query)}`;$('#naver').href=url;$('#naver-open').href=url;$('#naver-place-title').textContent=p.query?p.name:'장소 확인 필요';$('#naver-open').textContent=p.query?'네이버 지도 열기 ↗':'포천 지도 열기 ↗';$('#naver').textContent=p.query?'네이버 지도 ↗':'포천 지도 ↗';if(p.query){$('#destination').value=id;updateDirections()}if(scroll&&matchMedia('(max-width:650px)').matches)$('#map').scrollIntoView({behavior:'smooth',block:'start'});}
 let currentPosition=null,locationRequest=0;
@@ -55,6 +79,6 @@ function renderWeather(){const box=$('#weather-content');box.replaceChildren();c
 let loadingWeather=false;
 async function loadWeather(){if(loadingWeather)return;loadingWeather=true;$('#refresh').disabled=true;weatherResults={};renderWeather();try{await Promise.all([{lat:38.15,lon:127.31},{lat:38.07,lon:127.32}].map(async(p,i)=>{try{const response=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FSeoul&forecast_days=16`,{signal:AbortSignal.timeout(12000)});if(!response.ok)throw Error('weather');const data=await response.json();if(!data.daily?.time)throw Error('format');weatherResults[i]={...data,updated:new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Seoul'})};}catch{weatherResults[i]={error:true}}renderWeather()}))}finally{loadingWeather=false;$('#refresh').disabled=false}}
 document.querySelectorAll('[data-region]').forEach(b=>b.onclick=()=>{region=Number(b.dataset.region);document.querySelectorAll('[data-region]').forEach(n=>n.classList.toggle('selected',n===b));renderWeather()});$('#refresh').onclick=loadWeather;
-renderSchedule();routeOptions();$('#origin').value='soi';focusPlace('goseok');loadWeather();
+renderSchedule();routeOptions();$('#origin').value='lunch1';focusPlace('lunch1');loadWeather();
 
 
